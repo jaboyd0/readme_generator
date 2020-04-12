@@ -1,6 +1,10 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
+const axios = require("axios");
+
+// const url = `https://api.github.com/users/${response.github_user}`;
+// const data = await axios.get(url);
 
 
 const writeFileAsync = util.promisify(fs.writeFile);
@@ -96,7 +100,6 @@ function generateREADME(answers) {
 
   ${answers.github}
   ${answers.Email}
-
   `;
 }
 

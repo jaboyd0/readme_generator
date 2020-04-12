@@ -19,7 +19,7 @@ function promptUser() {
       },
       {
         type: "input",
-        name: "Table of Contents",
+        name: "TableContents",
         message: "Give a table of contents for your project"
       },
       {
@@ -56,29 +56,48 @@ function promptUser() {
         type: "input",
         name: "Email",
         message: "What is your Email address?"
-      },
-      {
-        type: "input",
-        name: "title",
-        message: "What is the Title of your project?"
       }
 ]);
 }
 
 function generateREADME(answers) {
   return `
-#${answers.title}
-    <h1 class="display-4">Hi! My name is ${answers.name}</h1>
-    <p class="lead">I am from ${answers.location}.</p>
-    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-    <ul class="list-group">
-      <li class="list-group-item">My GitHub username is ${answers.github}</li>
-      <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>`;
+# ${answers.title}
+
+## Discription
+
+  ${answers.Description}
+
+## Table of Content
+
+  ${answers.TableContents}
+
+## Installation
+
+  ${answers.Installation}
+
+## Usage
+
+  ${answers.Usage}
+
+## License
+
+  ${answers.License}
+
+## Contributers
+
+  ${answers.Contributing}
+
+## Testing
+
+  ${answers.Tests}
+
+## Creators github
+
+  ${answers.github}
+  ${answers.Email}
+
+  `;
 }
 
 function init() {

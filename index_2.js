@@ -53,7 +53,7 @@ function promptUser() {
       },
       {
         type: "input",
-        name: "github",
+        name: "github_user",
         message: "Enter your GitHub Username"
       },
       {
@@ -62,6 +62,23 @@ function promptUser() {
         message: "What is your Email address?"
       }
 ]);
+}
+
+
+
+async function getGithub() {
+  try {
+    const { movie } = answers.github_user;
+
+    const { data } = await axios.get(
+      `https://api.github.com/users/${movie}`
+    );
+
+    console.log(data);
+  
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function generateREADME(answers) {
@@ -98,7 +115,8 @@ function generateREADME(answers) {
 
 ## Creators github
 
-  ${answers.github}
+  ${answers.github_user}
+  ${getGithub()}
   ${answers.Email}
   `;
 }

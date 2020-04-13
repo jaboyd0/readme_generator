@@ -1,13 +1,8 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const util = require("util");
 const axios = require("axios");
+// const generateMarkdown = require('./generateMarkdown');
 
-// const url = `https://api.github.com/users/${response.github_user}`;
-// const data = await axios.get(url);
-
-
-const writeFileAsync = util.promisify(fs.writeFile);
 
 function promptUser() {
   return inquirer.prompt([
@@ -65,16 +60,15 @@ function promptUser() {
 }
 
 
-
 async function getGithub() {
   try {
-    const { movie } = answers.github_user;
+    const { username } = answers.github_user;
 
     const { data } = await axios.get(
-      `https://api.github.com/users/${movie}`
+      `https://api.github.com/users/${username}`
     );
 
-    console.log(data);
+    console.log(data.email)
   
   } catch (err) {
     console.log(err);
@@ -83,12 +77,13 @@ async function getGithub() {
 
 function generateREADME(answers) {
   return `
-# ${answers.title}
+# ${answers.title} 
 
-## Discription
+## Description
 
   ${answers.Description}
 
+----
 ## Table of Content
 
   ${answers.TableContents}
@@ -116,6 +111,8 @@ function generateREADME(answers) {
 ## Creators github
 
   ${answers.github_user}
+  github.com/jaboyd0.png
+  ![github pic](http://www.github.com/${answers.github_user}.png)
   ${getGithub()}
   ${answers.Email}
   `;
@@ -124,12 +121,18 @@ function generateREADME(answers) {
 function init() {
   console.log("hi");
 
-  promptUser()
-    .then((answers) => {
-      return writeFileAsync("newREADME.md", generateREADME(answers));
-    }).then(() => {
-      console.log("Successfully wrote to README");
-    }).catch(error => console.log(error));
-}
+  promptUser().then(async function(response) {
+    console.log(response);
+
+    const markdown = generateREADME(response);
+    fs.writeFile('testREADME.md', markdown, function(error) {
+        if (error) {
+            return console.log(error);
+        } else {
+            console.log('success')
+        }
+    });
+  })};
+
 
 init();
